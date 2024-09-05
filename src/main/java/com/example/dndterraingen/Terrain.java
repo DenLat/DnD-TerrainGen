@@ -6,7 +6,7 @@ public class Terrain{
     int sizex;
     int sizey;
     int mode;
-    ArrayList<ArrayList<Integer>> terrainArray = new ArrayList<>();;
+    ArrayList<ArrayList<Integer>> terrainArray = new ArrayList<>();
 
     Terrain(){
         sizex = 3;
