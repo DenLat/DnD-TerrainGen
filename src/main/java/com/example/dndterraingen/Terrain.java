@@ -33,11 +33,13 @@ public class Terrain {
         double frequency = 0.1;
         double amplitude = 10;
 
-        for (int i = 0; i < sizex; i++) {
+        terrainArray.clear(); // Clear existing terrain data
+
+        for (int i = 0; i < sizey; i++) { // Note: sizey is used for rows
             ArrayList<Integer> row = new ArrayList<>();
-            for (int j = 0; j < sizey; j++) {
-                double x = i * frequency;
-                double y = j * frequency;
+            for (int j = 0; j < sizex; j++) { // Note: sizex is used for columns
+                double x = j * frequency;
+                double y = i * frequency;
                 int value = (int) ((perlinNoise(x, y) + 1) * 0.5 * amplitude); // Normalize to 0-10 range
                 row.add(value);
             }
@@ -78,7 +80,7 @@ public class Terrain {
 
     private Vector2 randomGradient(int ix, int iy) {
         // Use the class seed to initialize the random generator
-        Random random = new Random(seed + (ix * 1741 + iy * 3079));
+        Random random = new Random(seed + (ix * 1741L + iy * 3079L));
         double angle = random.nextDouble() * 2 * Math.PI;
         return new Vector2(Math.cos(angle), Math.sin(angle));
     }
@@ -98,12 +100,14 @@ public class Terrain {
     }
 
     // Method to output terrain
-    public void Output() {
-        for (int i = 0; i < terrainArray.size(); i++) {
-            for (int j = 0; j < terrainArray.get(i).size(); j++) {
-                System.out.print(terrainArray.get(i).get(j) + " ");
+    public String Output() {
+        StringBuilder sb = new StringBuilder();
+        for (ArrayList<Integer> row : terrainArray) {
+            for (Integer value : row) {
+                sb.append(String.format("%2d ", value));
             }
-            System.out.println();
+            sb.append("\n");
         }
+        return sb.toString();
     }
 }
