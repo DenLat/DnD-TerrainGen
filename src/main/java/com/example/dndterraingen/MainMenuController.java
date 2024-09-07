@@ -10,7 +10,7 @@ public class MainMenuController {
     @FXML
     protected void onGenerateButtonClick() {
 
-        Terrain newMap = new Terrain(4,5,0);
+        Terrain newMap = new Terrain(10,10,0,32938203l);
         newMap.Generator();
         newMap.Output();
 
