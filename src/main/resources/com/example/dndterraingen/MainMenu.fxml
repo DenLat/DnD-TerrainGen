@@ -7,21 +7,32 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.BorderPane?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.dndterraingen.MainMenuController">
-  <padding>
-    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-  </padding>
-
-  <Label fx:id="welcomeText"/>
-  <HBox spacing="10">
-    <Label text="Width:"/>
-    <TextField fx:id="widthField" promptText="Enter width"/>
-    <Label text="Height:"/>
-    <TextField fx:id="heightField" promptText="Enter height"/>
-  </HBox>
-  <TextField fx:id="seedField" promptText="Enter seed"/>
-  <CheckBox fx:id="newSeedCheckbox" text="Generate new seed every time"/>
-  <Button text="Generate" onAction="#onGenerateButtonClick"/>
-</VBox>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.dndterraingen.MainMenuController">
+    <top>
+        <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </padding>
+            <Label fx:id="welcomeText" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+            <HBox spacing="10" alignment="CENTER">
+                <Label text="Width:"/>
+                <TextField fx:id="widthField" promptText="Enter width" prefWidth="80"/>
+                <Label text="Height:"/>
+                <TextField fx:id="heightField" promptText="Enter height" prefWidth="80"/>
+            </HBox>
+            <TextField fx:id="seedField" promptText="Enter seed" prefWidth="200"/>
+            <CheckBox fx:id="newSeedCheckbox" text="Generate new seed every time"/>
+            <Button text="Generate" onAction="#onGenerateButtonClick" style="-fx-font-size: 14px;"/>
+        </VBox>
+    </top>
+    <center>
+        <StackPane fx:id="mapContainer" style="-fx-background-color: #f0f0f0; -fx-padding: 10px;">
+            <GridPane fx:id="terrainGrid" hgap="1" vgap="1"/>
+        </StackPane>
+    </center>
+</BorderPane>

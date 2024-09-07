@@ -11,7 +11,7 @@ public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("MainMenu.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 445, 240);
+        Scene scene = new Scene(fxmlLoader.load(), 1920, 860);
         stage.setTitle("DnD map generator");
         stage.setScene(scene);
         stage.show();
