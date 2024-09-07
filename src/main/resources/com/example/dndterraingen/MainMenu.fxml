@@ -3,8 +3,11 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.layout.HBox?>
+
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.dndterraingen.MainMenuController">
   <padding>
@@ -12,5 +15,13 @@
   </padding>
 
   <Label fx:id="welcomeText"/>
-  <Button text="Generate!" onAction="#onGenerateButtonClick"/>
+  <HBox spacing="10">
+    <Label text="Width:"/>
+    <TextField fx:id="widthField" promptText="Enter width"/>
+    <Label text="Height:"/>
+    <TextField fx:id="heightField" promptText="Enter height"/>
+  </HBox>
+  <TextField fx:id="seedField" promptText="Enter seed"/>
+  <CheckBox fx:id="newSeedCheckbox" text="Generate new seed every time"/>
+  <Button text="Generate" onAction="#onGenerateButtonClick"/>
 </VBox>
