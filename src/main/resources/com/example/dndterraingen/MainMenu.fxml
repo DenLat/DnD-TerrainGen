@@ -10,29 +10,34 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.image.ImageView?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.dndterraingen.MainMenuController">
     <top>
-        <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
+        <VBox alignment="CENTER" spacing="15.0" BorderPane.alignment="CENTER">
             <padding>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
             </padding>
-            <Label fx:id="welcomeText" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-            <HBox spacing="10" alignment="CENTER">
+            <Label fx:id="welcomeText" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+            <HBox spacing="15" alignment="CENTER">
                 <Label text="Width:"/>
-                <TextField fx:id="widthField" promptText="Enter width" prefWidth="80"/>
+                <TextField fx:id="widthField" promptText="Width" prefWidth="100"/>
                 <Label text="Height:"/>
-                <TextField fx:id="heightField" promptText="Enter height" prefWidth="80"/>
+                <TextField fx:id="heightField" promptText="Height" prefWidth="100"/>
             </HBox>
-            <TextField fx:id="seedField" promptText="Enter seed" prefWidth="200"/>
-            <CheckBox fx:id="newSeedCheckbox" text="Generate new seed every time"/>
-            <Button text="Generate" onAction="#onGenerateButtonClick" style="-fx-font-size: 14px;"/>
+            <HBox spacing="15" alignment="CENTER">
+                <TextField fx:id="seedField" promptText="Seed" prefWidth="200"/>
+                <CheckBox fx:id="newSeedCheckbox" text="New Seed"/>
+            </HBox>
+            <Button text="Generate Terrain" onAction="#onGenerateButtonClick" style="-fx-font-size: 16px; -fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+            <Label fx:id="statusText" style="-fx-font-size: 16px; -fx-text-fill: red;" alignment="CENTER"/> <!-- Added status text -->
         </VBox>
     </top>
     <center>
-        <StackPane fx:id="mapContainer" style="-fx-background-color: #f0f0f0; -fx-padding: 10px;">
-            <GridPane fx:id="terrainGrid" hgap="1" vgap="1"/>
+        <StackPane fx:id="mapContainer" prefWidth="800" prefHeight="600"> <!-- StackPane for centering -->
+            <ImageView fx:id="imageView" fitWidth="800" fitHeight="600" preserveRatio="true"/>
         </StackPane>
     </center>
 </BorderPane>

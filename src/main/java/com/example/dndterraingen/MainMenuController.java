@@ -3,12 +3,14 @@ package com.example.dndterraingen;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.layout.StackPane;
-import javafx.scene.transform.Scale;
+import javafx.scene.layout.StackPane; // Ensure this import is present
+import javafx.scene.image.ImageView; // Added this import
 
 public class MainMenuController {
     @FXML
@@ -30,7 +32,10 @@ public class MainMenuController {
     private GridPane terrainGrid;
 
     @FXML
-    private StackPane mapContainer;
+    private StackPane mapContainer; // Change this line to StackPane
+
+    @FXML
+    private ImageView imageView; // Added this declaration
 
     @FXML
     protected void onGenerateButtonClick() {
@@ -81,31 +86,38 @@ public class MainMenuController {
     }
 
     private void displayTerrain(Terrain terrain) {
-        terrainGrid.getChildren().clear(); // Clear previous terrain
+    // Размер клетки в пикселях
+    int cellSize = 20;
 
-        for (int i = 0; i < terrain.sizey; i++) {
-            for (int j = 0; j < terrain.sizex; j++) {
-                int value = terrain.terrainArray.get(i).get(j);
-                Rectangle rect = new Rectangle(20, 20, getColorForValue(value));
-                rect.setStroke(Color.BLACK); // Add border to rectangles
-                terrainGrid.add(rect, j, i);
+    // Создаем изображение нужного размера
+    WritableImage image = new WritableImage(terrain.sizex * cellSize, terrain.sizey * cellSize);
+    PixelWriter pixelWriter = image.getPixelWriter();
+
+    // Проходим по каждой клетке и закрашиваем пиксели на основе значения
+    for (int i = 0; i < terrain.sizey; i++) {
+        for (int j = 0; j < terrain.sizex; j++) {
+            int value = terrain.terrainArray.get(i).get(j);
+            Color color = getColorForValue(value);
+
+            // Закрашиваем клетку размером cellSize x cellSize
+            for (int y = 0; y < cellSize; y++) {
+                for (int x = 0; x < cellSize; x++) {
+                    pixelWriter.setColor(j * cellSize + x, i * cellSize + y, color);
+                }
             }
         }
-
-        // Scale the map to fit the window
-        scaleMapToFitWindow(terrain);
     }
 
-    private void scaleMapToFitWindow(Terrain terrain) {
-        double scaleX = mapContainer.getWidth() / (terrain.sizex * 30);
-        double scaleY = mapContainer.getHeight() / (terrain.sizey * 30);
-        double scale = Math.min(scaleX, scaleY);
-        Scale scaleTransform = new Scale(scale, scale);
-        terrainGrid.getTransforms().setAll(scaleTransform);
+    // Устанавливаем изображение в ImageView
+    imageView.setImage(image);
+}
 
-        // Center the map
-        terrainGrid.setTranslateX((mapContainer.getWidth() - terrain.sizex * 20 * scale) / 2);
-        terrainGrid.setTranslateY((mapContainer.getHeight() - terrain.sizey * 20 * scale) / 2);
+    private void scaleMapToFitWindow() {
+        imageView.setFitWidth(mapContainer.getWidth());
+        imageView.setFitHeight(mapContainer.getHeight());
+        imageView.setPreserveRatio(true); 
+        mapContainer.widthProperty().addListener((obs, oldVal, newVal) -> scaleMapToFitWindow());
+        mapContainer.heightProperty().addListener((obs, oldVal, newVal) -> scaleMapToFitWindow());
     }
 
     private Color getColorForValue(int value) {
@@ -117,4 +129,6 @@ public class MainMenuController {
             default: return Color.WHITE;
         }
     }
+
+    // Add listeners to mapContainer's width and height properties
 }
